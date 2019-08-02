@@ -1,4 +1,4 @@
-package com.example.wapp;
+package com.example.appw;
 
 
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatsFragment extends Fragment {
+public class ContactsFragment extends Fragment {
 
 
-    public ChatsFragment() {
+    public ContactsFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class ChatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chats, container, false);
+        return inflater.inflate(R.layout.fragment_contacts, container, false);
     }
 
 }

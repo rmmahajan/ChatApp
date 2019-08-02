@@ -1,4 +1,4 @@
-package com.example.wapp;
+package com.example.appw;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,8 +27,8 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
                 ContactsFragment contactsFragment = new ContactsFragment();
                 return contactsFragment;
 
-                default:
-                    return null;
+            default:
+                return null;
         }
 
     }

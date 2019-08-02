@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.wapp">
-
-    <uses-permission android:name="android.permission.INTERNET" />
+    package="com.example.appw">
 
     <application
         android:allowBackup="true"

@@ -1,4 +1,4 @@
-package com.example.wapp;
+package com.example.appw;
 
 import androidx.appcompat.app.AppCompatActivity;
 
