@@ -1,9 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_image"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/login_chat"
+        android:layout_marginStart="@dimen/grid_3"
+        android:layout_marginRight="@dimen/grid_3"
+        android:layout_marginTop="@dimen/grid_3"
+        android:layout_marginBottom="@dimen/grid_3"
+        android:layout_marginEnd="@dimen/grid_3"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="@dimen/standard_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_image"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/register_email1"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_marginStart="@dimen/grid_3"
+        android:layout_marginRight="@dimen/grid_3"
+        android:layout_marginTop="@dimen/grid_3"
+        android:layout_marginBottom="@dimen/grid_3"
+        android:layout_marginEnd="@dimen/grid_3"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="@dimen/standard_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_email1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/register_password1"
+        android:layout_marginStart="@dimen/grid_3"
+        android:layout_marginRight="@dimen/grid_3"
+        android:layout_marginTop="@dimen/grid_3"
+        android:layout_marginBottom="@dimen/grid_3"
+        android:layout_marginEnd="@dimen/grid_3"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:layout_width="@dimen/standard_width"
+        android:layout_height="@dimen/standard_height"
+        android:id="@+id/buttonRegister"
+        android:layout_below="@+id/register_password1"
+        android:layout_centerHorizontal="true"
+        android:text="Create Account"
+        style="@style/standardButton"
+        android:layout_marginStart="@dimen/grid_3"
+        android:layout_marginRight="@dimen/grid_3"
+        android:layout_marginTop="@dimen/grid_3"
+        android:layout_marginBottom="@dimen/grid_3"
+        android:layout_marginEnd="@dimen/grid_3"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/already_have_an_account_link"
+        android:layout_below="@+id/buttonRegister"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/grid_3"
+        android:layout_marginBottom="@dimen/grid_3"
+        android:text="Already have an account?"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        />
+
+</RelativeLayout>

@@ -8,74 +8,150 @@
     tools:context=".LoginActivity">
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="match_parent">
 
             <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/login_image"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/login_chat"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:scaleType="fitCenter"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginRight="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:layout_marginEnd="@dimen/grid_3"
                 />
 
-            <EditText
-                android:id="@+id/login_email"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="@dimen/standard_width"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/login_image"
-                android:inputType="textEmailAddress"
-                android:hint="Email"
-                android:padding="4dp"
-                android:drawableStart="@drawable/ic_email_black_24dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                />
+                android:layout_below="@+id/login_image"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/login_email1"
+                android:textColorHint="@color/colorPrimary"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginRight="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:layout_marginEnd="@dimen/grid_3"
+                >
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/login_password"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="@dimen/standard_width"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/login_email"
-                android:inputType="textPassword"
-                android:hint="Password"
-                android:padding="4dp"
-                android:drawableStart="@drawable/ic_lock_black_24dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
+                android:layout_below="@+id/login_email1"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/login_password1"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginRight="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:layout_marginEnd="@dimen/grid_3"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/forgot_password_link"
+                android:layout_below="@+id/login_password1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:text="Forgot Password?"
+                android:textColor="@color/colorPrimaryDark"
+                android:textAlignment="textEnd"
                 />
+
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/login_password"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="19dp"
-                android:layout_marginRight="19dp"
-                android:padding="4dp"
+                android:layout_width="@dimen/standard_width"
+                android:layout_height="@dimen/standard_height"
+                android:id="@+id/buttonLogin"
+                android:layout_below="@+id/login_password1"
+                android:layout_centerHorizontal="true"
                 android:text="Login"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:id="@+id/login_button"
-                android:textColor="@android:color/background_light"
-                android:background="@drawable/buttons"
+                style="@style/standardButton"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginRight="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:layout_marginEnd="@dimen/grid_3"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/need_new_account_link"
+                android:layout_below="@+id/buttonLogin"
+                android:layout_centerHorizontal="true"
+
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:text="Need new account?"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_using"
+                android:layout_below="@+id/need_new_account_link"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/grid_3"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:text="Or Login using Phone"
+                android:textColor="#ffffff"
+                />
+
+
+            <Button
+                android:layout_width="@dimen/standard_width"
+                android:layout_height="@dimen/standard_height"
+                android:id="@+id/phone_button_login"
+                android:layout_below="@+id/login_using"
+                android:layout_centerHorizontal="true"
+                android:text="Phone Login"
+                style="@style/standardButton"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginRight="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:layout_marginEnd="@dimen/grid_3"
+
                 />
 
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </RelativeLayout>
