@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    FirebaseUser currentUser;
+    //FirebaseUser currentUser;
     FirebaseAuth mAuth;
     private Button LoginButton,PhoneLoginButton;
     private EditText userEmail,userPassword;
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        currentUser = mAuth.getCurrentUser();
+        //currentUser = mAuth.getCurrentUser();
 
         InitilizeFields();
 
@@ -115,20 +115,24 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    protected void onStart() {
+    /*protected void onStart() {
 
         super.onStart();
         if(currentUser != null)
         {
             sendUserToMainActivity();
         }
-    }
+    }*/
 
 
     private void sendUserToMainActivity() {
 
-        Intent loginIntent = new Intent(LoginActivity.this,MainActivity.class);
-        startActivity(loginIntent);
+        Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(mainIntent);
+        finish();
+
     }
 
 
@@ -136,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent registerIntent = new Intent(LoginActivity.this,RegisterActivity.class);
         startActivity(registerIntent);
+        finish();
     }
 
 

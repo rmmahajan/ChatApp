@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser == null)
         {
             sendUserToLoginActivity();
+            finish();
         }
     }
 
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(loginIntent);
+        finish();
     }
 
 
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         {
             mAuth.signOut();
             sendUserToLoginActivity();
+            finish();
         }
         if(item.getItemId() == R.id.settings_option)
         {

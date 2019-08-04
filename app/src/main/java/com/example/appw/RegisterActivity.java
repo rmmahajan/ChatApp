@@ -19,6 +19,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button createAccountButton;
     private EditText userEmail,userPassword;
     private TextView AlreadyHaveAnAccount;
+
+    private DatabaseReference RootRef;
 
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
@@ -37,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         IntializeFields();
 
         mAuth = FirebaseAuth.getInstance();
+        RootRef = FirebaseDatabase.getInstance().getReference();
 
         AlreadyHaveAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +90,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if(task.isSuccessful())
                             {
-                                sendUserToLoginActivity();
+
+                                String currentUserId = mAuth.getCurrentUser().getUid();
+                                RootRef.child("Users").child(currentUserId).setValue("");
+
+                                sendUserToMainActivity();
                                 Toast.makeText(RegisterActivity.this,"Account Created",Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                             }
@@ -98,6 +107,16 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
         }
+
+    }
+
+    private void sendUserToMainActivity() {
+
+        Intent mainIntent = new Intent(RegisterActivity.this,MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(mainIntent);
+        finish();
 
     }
 
@@ -116,5 +135,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         Intent loginIntent = new Intent(RegisterActivity.this,LoginActivity.class);
         startActivity(loginIntent);
+        finish();
     }
 }
