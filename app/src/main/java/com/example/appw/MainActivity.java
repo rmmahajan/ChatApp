@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser == null)
         {
             sendUserToLoginActivity();
-            finish();
         }
+
     }
 
     private void sendUserToLoginActivity() {
@@ -64,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(loginIntent);
         finish();
+    }
+
+    private void sendUserToSettingsActivity() {
+
+        Intent settingIntent = new Intent(MainActivity.this,SettingsActivity.class);
+        startActivity(settingIntent);
     }
 
 
@@ -84,11 +90,10 @@ public class MainActivity extends AppCompatActivity {
         {
             mAuth.signOut();
             sendUserToLoginActivity();
-            finish();
         }
         if(item.getItemId() == R.id.settings_option)
         {
-
+            sendUserToSettingsActivity();
         }
         if(item.getItemId() == R.id.main_find_friends_option)
         {
