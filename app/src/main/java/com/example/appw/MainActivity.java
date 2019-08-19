@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         FirebaseApp.initializeApp(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -153,8 +154,19 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.main_find_friends_option)
         {
 
+            sendUserToFindFriendsActivity();
+
         }
         return true;
+    }
+
+    private void sendUserToFindFriendsActivity() {
+
+
+        Intent findFriendsIntent = new Intent(MainActivity.this,FindFriendsActivity.class);
+        startActivity(findFriendsIntent);
+
+
     }
 
     private void RequestNewGroup() {
@@ -163,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Enter Group Name : ");
         final EditText groupNameField = new EditText(MainActivity.this);
         groupNameField.setHint("e.g. Coding Cafe...");
+        groupNameField.setTextColor(getResources().getColor(R.color.black));
         builder.setView(groupNameField);
 
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
