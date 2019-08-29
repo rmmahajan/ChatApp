@@ -27,11 +27,12 @@ public class PhoneLoginActivity extends AppCompatActivity {
     private Button SendVerificationCodeButton,VerifyButton;
     EditText InputPhoneNumber,InputVerificationCode;
 
-    private FirebaseAuth mAuth;
-
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
+
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+
+    private FirebaseAuth mAuth;
 
     private ProgressDialog loadingBar;
 
@@ -73,9 +74,9 @@ public class PhoneLoginActivity extends AppCompatActivity {
                             PhoneLoginActivity.this,               // Activity (for callback binding)
                             callbacks);        // OnVerificationStateChangedCallbacksPhoneAuthActivity.java
                 }
-
             }
         });
+
 
 
         VerifyButton.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +107,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
             }
         });
+
 
 
         callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -154,6 +156,10 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
             }
         };
+
+
+
+
 
     }
 
