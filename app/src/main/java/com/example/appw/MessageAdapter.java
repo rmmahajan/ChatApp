@@ -1,5 +1,6 @@
 package com.example.appw;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull final MessageViewHolder holder, int position)
     {
 
         String messageSenderId = mAuth.getCurrentUser().getUid();
@@ -88,6 +90,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
 
+                if(dataSnapshot.hasChild("image"))
+                {
+                    String receiverImage = dataSnapshot.child("image").getValue().toString();
+                    Picasso.get().load(receiverImage).placeholder(R.drawable.profile_image).into(holder.receiverProfileImage);
+                }
 
             }
 
@@ -99,6 +106,34 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             }
         });
+
+        if(fromMessageType.equals("text"))
+        {
+            holder.receiverMessageText.setVisibility(View.INVISIBLE);
+            holder.receiverProfileImage.setVisibility(View.INVISIBLE);
+            holder.senderMessageText.setVisibility(View.INVISIBLE);
+
+            if(fromUseerId.equals(messageSenderId))
+            {
+                holder.senderMessageText.setVisibility(View.VISIBLE);
+                holder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
+                holder.senderMessageText.setTextColor(Color.BLACK);
+                holder.senderMessageText.setText(messages.getMessage());
+            }
+            else
+            {
+
+                holder.receiverProfileImage.setVisibility(View.VISIBLE);
+                holder.receiverMessageText.setVisibility(View.VISIBLE);
+
+                holder.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
+                holder.receiverMessageText.setTextColor(Color.BLACK);
+                holder.receiverMessageText.setText(messages.getMessage());
+
+            }
+
+
+        }
 
     }
 
