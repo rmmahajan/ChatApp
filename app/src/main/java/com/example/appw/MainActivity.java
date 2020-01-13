@@ -1,9 +1,5 @@
 package com.example.appw;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,8 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout myTabLayout;
     private TabsAccessorAdapter myTabsAccessorAdapter;
 
-    private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
 
         mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+
         RootRef = FirebaseDatabase.getInstance().getReference();
 
         mtoolbar = findViewById(R.id.main_page_toolbar);
@@ -68,15 +71,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
 
         super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if(currentUser == null)
         {
             sendUserToLoginActivity();
         }
         else
         {
+            updateUserStatus("online");
             VerifyUserExistance();
         }
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null)
+        {
+            updateUserStatus("offline");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null)
+        {
+            updateUserStatus("offline");
+        }
     }
 
     private void VerifyUserExistance() {
@@ -118,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendUserToSettingsActivity() {
 
-        Intent settingIntent = new Intent(MainActivity.this,SettingsActivity.class);
+        Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(settingIntent);
     }
 
@@ -138,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(item.getItemId() == R.id.logout_option)
         {
+            updateUserStatus("offline");
             mAuth.signOut();
             sendUserToLoginActivity();
         }
@@ -169,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void RequestNewGroup() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this,R.style.AlertDialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
         builder.setTitle("Enter Group Name : ");
         final EditText groupNameField = new EditText(MainActivity.this);
         groupNameField.setHint("e.g. Coding Cafe...");
@@ -224,4 +254,32 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
+
+
+    private void updateUserStatus(String state)
+    {
+        String saveCurrentTime, saveCurrentDate;
+
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        saveCurrentTime = currentTime.format(calendar.getTime());
+
+        HashMap<String, Object> onlineStateMap = new HashMap<>();
+        onlineStateMap.put("time", saveCurrentTime);
+        onlineStateMap.put("date", saveCurrentDate);
+        onlineStateMap.put("state", state);
+
+        currentUserId = mAuth.getCurrentUser().getUid();
+
+        RootRef.child("Users").child(currentUserId).child("userState")
+                .updateChildren(onlineStateMap);
+
+    }
+
+
+
 }

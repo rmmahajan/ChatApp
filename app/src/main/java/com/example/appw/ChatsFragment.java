@@ -3,17 +3,15 @@ package com.example.appw;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -24,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -73,7 +73,7 @@ public class ChatsFragment extends Fragment {
 
         FirebaseRecyclerOptions<Contacts> options =
                 new FirebaseRecyclerOptions.Builder<Contacts>()
-                        .setQuery(chatsRef,Contacts.class)
+                        .setQuery(chatsRef, Contacts.class)
                         .build();
 
 
@@ -110,11 +110,34 @@ public class ChatsFragment extends Fragment {
                                 Picasso.get().load(retImage[0]).into(chatsViewHolder.profileImage);
                             }
 
+
                             final String retName = dataSnapshot.child("name").getValue().toString();
                             final String retStatus = dataSnapshot.child("status").getValue().toString();
 
                             chatsViewHolder.userName.setText(retName);
-                            chatsViewHolder.userStatus.setText("Last Seen :"+" Time");
+                            chatsViewHolder.userStatus.setText("Last Seen :"+"Date"+" Time");
+
+
+                            if(dataSnapshot.child("userState").hasChild("state"))
+                            {
+                                String state = dataSnapshot.child("userState").child("state").getValue().toString();
+                                String date = dataSnapshot.child("userState").child("date").getValue().toString();
+                                String time = dataSnapshot.child("userState").child("time").getValue().toString();
+
+                                if(state.equals("online"))
+                                {
+                                    chatsViewHolder.userStatus.setText("Online");
+                                }
+                                else if(state.equals("offline"))
+                                {
+                                    chatsViewHolder.userStatus.setText("Last Seen :"+date+" "+time);
+                                }
+
+                            }
+
+                            else {
+                                chatsViewHolder.userStatus.setText("Offline");
+                            }
 
 
                             chatsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

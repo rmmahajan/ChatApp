@@ -1,14 +1,12 @@
 package com.example.appw;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +18,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private String receiveUserId,current_status,senderUserId;
@@ -28,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView userProfileName,userProfileStatus;
     private Button sendMessageRequestButton,declineMessageRequestButton;
 
-    private DatabaseReference userRef,chatRequestRef,contactsRef;
+    private DatabaseReference userRef,chatRequestRef,contactsRef,NotificationRef;
 
     private FirebaseAuth mAuth;
 
@@ -43,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         chatRequestRef = FirebaseDatabase.getInstance().getReference().child("Chat Requests");
         contactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        NotificationRef = FirebaseDatabase.getInstance().getReference().child("Notifications");
 
         receiveUserId = getIntent().getExtras().get("visit_user_id").toString();
         senderUserId = mAuth.getCurrentUser().getUid();
@@ -343,9 +346,26 @@ public class ProfileActivity extends AppCompatActivity {
 
                                             if(task.isSuccessful())
                                             {
-                                                sendMessageRequestButton.setEnabled(true);
-                                                current_status = "request_sent";
-                                                sendMessageRequestButton.setText("Cancel chat request");
+
+                                                HashMap<String,String> chatnotificationMap = new HashMap<String, String>();
+                                                chatnotificationMap.put("from",senderUserId);
+                                                chatnotificationMap.put("type","request");
+
+                                                NotificationRef.child(receiveUserId).push()
+                                                        .setValue(chatnotificationMap)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                                if(task.isSuccessful())
+                                                                {
+                                                                    sendMessageRequestButton.setEnabled(true);
+                                                                    current_status = "request_sent";
+                                                                    sendMessageRequestButton.setText("Cancel chat request");
+                                                                }
+
+                                                            }
+                                                        });
                                             }
 
                                         }
